@@ -1,0 +1,41 @@
+/* 
+ * 	Vipulaukaisin - DropOn
+ * 	
+ * 	K‰ynnist‰‰ toiminnan hahmon tiputtaessa tavaran p‰‰lle.
+ *	
+ * 	Northern Winds (C) 2007
+ */
+use cfgfile;
+use datafile;
+use os;
+use uo;
+
+include ":gumps:quick";
+include ":include:datafile";
+include ":include:message";
+include ":include:mobile";
+include ":include:time";
+
+include ":lever:helper";
+include ":lever:play";
+include ":lever:staff";
+include ":lever:trigger";
+
+
+// Ladataan
+var cfg := ReadConfigFile(":lever:actions");
+
+
+program main( item )
+	
+	while (item)
+		sleep(5);
+		
+		if (ListItemsAtLocation(item.x, item.y, item.z).size())
+			UseLever(item, item);
+		endif
+	endwhile
+	
+	return 1;
+	
+endprogram

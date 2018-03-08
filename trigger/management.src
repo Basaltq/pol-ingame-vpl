@@ -1,0 +1,38 @@
+/*
+ * 	Vipulaukaisin - Use
+ * 	
+ * 	Käynnistää toiminnan hahmon klikatessa vipua.
+ *	
+ * 	Northern Winds (C) 2007
+ */
+use cfgfile;
+use datafile;
+use os;
+use uo;
+
+include ":event:const";
+include ":event:event";
+include ":gumps:quick";
+include ":include:datafile";
+include ":include:messages";
+include ":include:mobiles";
+include ":include:time";
+include ":item:item";
+
+include ":lever:helper";
+include ":lever:play";
+include ":lever:staff";
+include ":lever:trigger";
+
+
+// Ladataan
+var cfg := ReadConfigFile(":lever:actions");
+
+
+program use_lever( who, item )
+	
+	if (who.cmdlevel >= STAFF_CMDLEVEL)
+		ControlPanel(who, item);
+	endif
+	
+endprogram

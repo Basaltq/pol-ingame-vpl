@@ -1,0 +1,23 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use polsys;
+use uo;
+use vitals;
+
+include ":item:item";
+include ":lever:helper";
+include ":include:message";
+
+program main( event )
+	
+	var dfile := OpenDataFile(DFILE_APPLICATION);
+	var elem := dfile.FindElement(event["Lever"].GetProp("LeverID"));
+	var vars := elem.SetProp("Phase", event["Phase"]);
+	
+	return 1;
+	
+endprogram

@@ -1,0 +1,19 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use polsys;
+use uo;
+use vitals;
+
+include ":include:action";
+
+program main( event )
+	
+	Run_Script(event["Script"], event["Parameter"]);
+	
+	return 1;
+	
+endprogram

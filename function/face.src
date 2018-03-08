@@ -1,0 +1,44 @@
+use cfgfile;
+use uo;
+use util;
+use vitals;
+use os;
+
+include ":commands:commands";
+include ":include:coord";
+include ":include:message";
+include ":lever:helper";
+
+
+
+
+
+
+program suunta ( event )
+	
+
+	var who := event["What"];
+	
+	case (event["Direction"])
+		"n":
+			who.setfacing(0);
+		"ne":
+			who.setfacing(1);
+		"e":
+			who.setfacing(2);
+		"se":
+			who.setfacing(3);
+		"s":
+			who.setfacing(4);
+		"sw":
+			who.setfacing(5);
+		"w":
+			who.setfacing(6);
+		"nw":
+			who.setfacing(7);
+	endcase
+	
+
+endprogram
+
+

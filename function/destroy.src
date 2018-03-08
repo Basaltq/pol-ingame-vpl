@@ -1,0 +1,20 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use polsys;
+use uo;
+use vitals;
+
+include ":include:message";
+
+program main( event )
+	
+	DB("Poistetaan tavara:"+event["Item"]);
+	DestroyItem(event["Item"]);
+	
+	return 1;
+	
+endprogram

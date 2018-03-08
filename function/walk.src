@@ -1,0 +1,36 @@
+
+
+use os;
+use uo;
+
+include ":include:action";
+include ":include:message";
+
+program main( data )
+	
+	var dest := data["Destination"];
+	var object := data["Mover"];
+	var speed := 400;
+	
+	var path := FindPath( object.x, object.y, object.z, dest.x, dest.y, dest.z, _DEFAULT_REALM, 0 );
+	
+	var status := object.frozen;
+
+	
+	foreach stepz in path
+			db(object);
+		db(object.warmode);
+		object.frozen := 0;
+		Face(object, stepz);
+		object.frozen := 1;
+		SleepMS(speed);
+		MoveObjectToLocation(object, stepz.x, stepz.y, stepz.z, object.realm, MOVEOBJECT_FORCELOCATION);
+			if (object.warmode);
+				object.frozen := 0;
+				return 0;
+			endif	
+		
+	endforeach
+
+endprogram 
+

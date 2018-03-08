@@ -1,0 +1,16 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+program main( data )
+	
+	UseItem(data["Item"], data["User"]);
+	
+	return 1;
+	
+endprogram

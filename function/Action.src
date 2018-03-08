@@ -1,0 +1,23 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use polsys;
+use uo;
+use vitals;
+
+include ":include:message";
+
+program main( event )
+	
+	DB("Soitetaan saundi:"+event["Sound"]);
+	
+	foreach mob in (event["Mobile"])
+		PerformAction(mob, event["Action"]);
+	endforeach
+	
+	return 1;
+	
+endprogram

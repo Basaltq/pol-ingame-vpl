@@ -1,0 +1,33 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":include:message";
+include ":include:time";
+
+program main( event )
+	
+	var time := event["Value"];
+	
+	// Huom. S tippuu läpi
+	case (event["Timespan"])
+		"ms":
+			SleepMS(time);
+			return 1;
+		"m":
+			time *= MINUTE;
+		"h":
+			time *= HOUR;
+	endcase
+	
+	db("Nukutaan "+time);
+	Sleep(time);
+	
+	return 1;
+	
+endprogram

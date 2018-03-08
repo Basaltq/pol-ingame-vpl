@@ -1,0 +1,49 @@
+/*
+	Metodi - Vipu
+	
+	Northern Winds (c) 2008
+*/
+use datafile;
+use os;
+use uo;
+
+include ":lever:helper";
+//~ include ":include:message";
+
+program main( who )
+	
+	return 1;
+	
+endprogram
+
+/*
+	Vivut ei ole suunniteltu muokattavaksi propeditillä
+	Toinen vaihtoehto olisi laittaa jokin prefix aroille cpropeille,
+	mikä rajottaisi proppien muokkausoikeutta
+	
+*/
+exported function CopyItem( item, copy )
+	
+	var app_data := OpenDataFile(DFILE_APPLICATION);
+	var itemid := copy.GetProp("LeverID");
+	var elem;
+	
+	if (itemid)
+		elem := app_data.FindElement(itemid);
+		var triggers := elem.GetProp("Triggers");
+		triggers.append(copy.serial);
+		elem.SetProp("Triggers", triggers);
+	endif
+	
+	return 1;
+	
+endfunction
+
+
+exported function CPropEditRestricted()
+	
+	// Vain deveillä oikeus
+	return 5;
+	
+endfunction
+

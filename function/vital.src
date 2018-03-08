@@ -1,0 +1,24 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":attributes:const";
+include ":damage:damage";
+include ":include:message";
+
+program main( data )
+	
+	SetVital(data["Mobile"], data["Vital"], data["Amount"] * 100);
+	
+	if (lower(data["Vital"]) == "life" && data["Amount"] == 0)
+		ForceKill(data["Mobile"]);
+	endif
+	
+	return 1;
+	
+endprogram

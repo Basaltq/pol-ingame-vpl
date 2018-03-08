@@ -1,0 +1,29 @@
+use cfgfile;
+use uo;
+use util;
+use vitals;
+use os;
+
+include ":blood:blood";
+include ":commands:commands";
+include ":gumps:gumps";
+include ":include:array";
+include ":include:coord";
+include ":include:message";
+include ":include:mobile";
+include ":include:text";
+include ":lever:helper";
+include ":gumps:quick";
+include ":names:names";
+
+program efekti (event)
+	
+	var sijainti := event["Where"];
+	var efekti := event["Effect"];
+	var kierros := event["Loop"];
+	
+	PlayStationaryEffect(sijainti.x, sijainti.y, sijainti.z, efekti, 10, kierros);
+	
+	return 1;
+	
+endprogram

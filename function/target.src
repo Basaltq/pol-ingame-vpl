@@ -1,0 +1,34 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":gumps:quick";
+include ":lever:helper";
+include ":include:message";
+
+program main( event )
+	
+	if (event["Variable"])
+		
+		if (event["Text"] && event["Text"] != "0")
+			Message(event["Mobile"], event["Text"]);
+		endif
+		
+		var targ := Target(event["Mobile"]);
+		
+		if (targ)
+			SaveVariable(event, event["Variable"], targ.serial);
+			
+			return 1;
+		endif
+		
+	else
+		db("Variable has not been set.");
+	endif
+	
+endprogram

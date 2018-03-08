@@ -1,0 +1,66 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":include:coord";
+include ":include:message";
+include ":include:utility";
+include ":lever:helper";
+
+program main( data )
+	
+	var dest := data["Destination"];
+	var object := data["Mover"];
+	
+	if (!object)
+		return error{"errortext" := "Objektia ei lˆydy."};
+	endif
+	
+	if (typeof(object) != "Array")
+		object := {object};
+	endif
+	
+	// Kiepautetaan p‰‰m‰‰r‰
+	if (data["Invert"])
+		var inv := GetVariable(data, "IsInverted");
+		if (inv)
+			dest := data["StartPoint"];
+		endif
+		
+		SaveVariable(data, "IsInverted", !inv);
+	endif
+	
+	var coords;
+	var time :=  data["Time"];
+	
+	var offsetpoint;
+	
+	// Jos aika on nolla, siirret‰‰n suoraan perille
+	if (time)
+		coords := ListCoordsInLine(object[1], dest);
+	else
+		coords := {dest};
+	endif
+	
+	// Riippuen miten meinaa toteuttaa, yhden vaiheen vivut: katsoisi kummassa p‰‰ss‰ on, ja siirtyy toiseen
+	foreach coord in coords
+		
+		offsetpoint := GetCoords(object[1]);
+		
+		Set_Critical(1);
+		foreach item in object
+			MoveObjectToLocation(item, coord.x + (item.x - offsetpoint.x), coord.y + (item.y - offsetpoint.y), coord.z + (item.z - offsetpoint.z), item.realm, MOVEITEM_IGNOREMOVABLE + MOVEOBJECT_FORCELOCATION);
+		endforeach
+		Set_Critical(0);
+		
+		sleepms(time);
+	endforeach
+	
+	return 1;
+	
+endprogram

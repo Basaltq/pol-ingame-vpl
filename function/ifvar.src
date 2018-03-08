@@ -1,0 +1,39 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":include:mobile";
+include ":include:message";
+include ":lever:helper";
+
+program main( event )
+	
+	var value := GetVariable(event, event["Variable"]);
+	
+	db(value +" "+event["Comprasion"] + " "+event["Value"]);
+	
+	case (event["Comprasion"])
+		"Not":
+			value := value != event["Value"];
+		"Equal":
+			value := value == event["Value"];
+		"Bigger":
+			value := value > event["Value"];
+		"Smaller":
+			value := value < event["Value"];
+		default:
+			return error;
+	endcase
+	
+	if (!value)
+		return event["Block"] + 1;
+	else
+		return 1;
+	endif
+	
+endprogram

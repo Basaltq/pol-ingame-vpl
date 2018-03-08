@@ -1,0 +1,34 @@
+/* 
+ * 	Vipulaukaisin - WalkOn
+ * 	
+ * 	K‰ynnist‰‰ toiminnan hahmon astuessa p‰‰lle.
+ *	
+ * 	Northern Winds (C) 2007
+ */
+use cfgfile;
+use datafile;
+use os;
+use uo;
+
+include ":gumps:quick";
+include ":include:datafile";
+include ":include:message";
+include ":include:mobile";
+include ":include:time";
+
+include ":lever:helper";
+include ":lever:play";
+include ":lever:staff";
+include ":lever:trigger";
+
+
+// Ladataan
+var cfg := ReadConfigFile(":lever:actions");
+
+
+program main( who, item )
+	
+	UseLever(who, item);
+	return 1;
+	
+endprogram

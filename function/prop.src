@@ -1,0 +1,25 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+program main( data )
+	
+	var object := data["What"];
+	if (CInt(data["Value"]) > 0)
+		data["Value"] := Cint(data["Value"]);
+	endif
+	
+	if (data["Cprop"])
+		object.SetProp(data["Prop"], data["Value"]);
+	else
+		object.Set_Member(data["Prop"], data["Value"]);
+	endif
+	
+	return 1;
+	
+endprogram

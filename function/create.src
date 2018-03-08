@@ -1,0 +1,26 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use polsys;
+use uo;
+use vitals;
+
+include ":item:item";
+include ":lever:helper";
+include ":include:message";
+
+program main( event )
+	
+	DB("Luodaan tavara:"+event["Objtype"]);
+	var item := CreateItem(event["Where"], event["Objtype"]);
+	
+	if (event["Created"])
+		SaveVariable(event, event["Created"], item.serial);
+	endif
+	
+	return 1;
+	
+endprogram

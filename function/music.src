@@ -1,0 +1,21 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use polsys;
+use uo;
+use vitals;
+
+include ":music:music";
+include ":include:message";
+
+program main( event )
+	
+	DB("Soitetaan musa:"+event["Music"]);
+	PlayMusic(event["ToWho"], event["Music"]);
+	
+	return 1;
+	
+endprogram

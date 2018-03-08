@@ -1,0 +1,34 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Todo: Samaan syssyyn myös puheenvärituki
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":include:mobile";
+include ":include:message";
+
+program main( event )
+	
+	var onwhat := event["OnWhat"];
+	var colour := onwhat.speech_color;
+	
+	if (!colour)
+		colour := _DEFAULT_UCCOLOR;
+	endif
+	
+	if (event["IsEmote"])
+		colour := COLOR_EMOTE;
+		event["Text"] := "*"+event["Text"] +"*";
+	endif
+	
+	Above(onwhat, event["Text"], colour);
+	Sleep(event["Sleep"]);
+	
+	return 1;
+	
+endprogram

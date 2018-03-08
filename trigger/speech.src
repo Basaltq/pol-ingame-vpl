@@ -1,0 +1,48 @@
+/* 
+ * 	Vipulaukaisin - Speech
+ * 	
+ * 	K‰ynnist‰‰ toiminnan valituilla avainsanoilla, hyvin yksinkertainen toiminta
+ *	toistaiseksi.
+ * 	
+ * 	Northern Winds (C) 2007
+ */
+use cfgfile;
+use datafile;
+use os;
+use uo;
+
+include ":event:const";
+include ":gumps:quick";
+include ":include:datafile";
+include ":include:message";
+include ":include:mobile";
+include ":include:time";
+
+include ":lever:helper";
+include ":lever:play";
+include ":lever:staff";
+include ":lever:trigger";
+
+
+// Ladataan
+var cfg := ReadConfigFile(":lever:actions");
+
+
+program main( item )
+	
+	RegisterForSpeechEvents(item, 15);
+	
+	while (item)
+		var ev := wait_for_event(3600);
+		
+		if (ev)
+			var spoken := lower(CChrZ(ev.uc_text));
+			var magicwords := item.GetProp("Words");
+			
+			if (spoken[magicwords])
+				UseLever(ev.source, item);
+			endif
+		endif
+	endwhile
+	
+endprogram

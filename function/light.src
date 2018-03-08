@@ -1,0 +1,23 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use polsys;
+use uo;
+use vitals;
+
+include ":include:message";
+
+program main( event )
+	
+	DB("Asetetaan valoisuus:"+event["Level"]);
+	db(event["ToWho"]);
+	foreach mob in (event["ToWho"])
+		mob.SetLightLevel(event["Level"], event["Time"]);
+	endforeach
+	
+	return 1;
+	
+endprogram

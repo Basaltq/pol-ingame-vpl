@@ -1,0 +1,38 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":gumps:quick";
+include ":lever:helper";
+include ":include:message";
+include ":names:names";
+include ":profile:profile";
+
+program main( event )
+	
+	var who := event["What"];
+	var answer := ValidProfile(GetProfile(who));
+	
+	case (event["ShowProfile"])
+		"Always":
+			ViewProfile(who);
+		"OnFailure":
+			if (!answer)
+				ViewProfile(who);
+			endif
+	endcase
+	
+	if (event["Variable"] != "NULL")
+		SaveVariable(event, event["Variable"], answer);
+	else
+		// Hyp‰t‰‰n muuten jos ei asetettu varria
+		return 1 + (event["Block"]) * answer;
+	endif
+	
+	
+endprogram

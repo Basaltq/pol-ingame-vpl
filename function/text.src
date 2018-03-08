@@ -1,0 +1,44 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Todo: Samaan syssyyn myös puheenvärituki
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":include:mobile";
+include ":include:message";
+
+program main( event )
+	
+	var hearers := event["ShowTo"];
+	var onwhat := event["OnWhat"];
+	var colour := event["Color"];
+	
+	if (!colour)
+		colour := _DEFAULT_UCCOLOR;
+	endif
+	
+	// Pistetään vähän tylsästi tämä above, kun nearby määre on lukittu vipuun
+	
+	if (event["IsAbove"])
+		if (!hearers)
+			Above(onwhat, event["Text"], colour);
+		else
+			foreach player in hearers
+				Private(onwhat, event["Text"], player, colour);
+			endforeach
+		endif	
+	else
+		foreach player in hearers
+			Message(player, event["Text"], colour);
+		endforeach
+	endif
+
+	
+	return 1;
+	
+endprogram

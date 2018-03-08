@@ -1,0 +1,31 @@
+/*
+	Lever destroy script
+	
+	Tuhoaa datafile-applikaation kun viimeinen linkitetty vipu tuhoutuu.
+	Huolimaton GM ja propedit saa sotkettua t‰m‰n logiikan t‰ysin.
+	Idioottivarmistus propedittiin ei olisi pahitteeksi.
+	
+	Northern Winds (c) 2007
+*/
+use datafile;
+use os;
+use uo;
+
+include ":lever:helper";
+
+program main( lever )
+	
+	// Sallitaan tuhoutuminen jos datastore merkinn‰t poistuu onnistuneesti
+	if (AppRemoveTrigger( lever ))
+		return 1;
+	else
+		if (!GetLeverInfo(lever))
+			// Vipua ei oltu kytketty sovellukseen
+			return 1;
+		endif
+	endif
+	
+	// Jossain m‰tt‰‰! DS merkint‰ ei poistunut?
+	return 0;
+	
+endprogram

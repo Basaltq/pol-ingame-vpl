@@ -1,0 +1,29 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+include ":gumps:quick";
+include ":lever:helper";
+include ":include:message";
+
+program main( event )
+	
+	var answer := YesNo(event["Mobile"], event["Text"]) == 1;
+	
+	if (event["IfNotTrue"])
+		answer := !answer;
+	endif
+	
+	if (event["Variable"] != "NULL")
+		SaveVariable(event, event["Variable"], answer);
+	else
+		// Hyp‰t‰‰n muuten jos ei asetettu varria
+		return (event["Block"] + 1) * answer;
+	endif
+	
+endprogram

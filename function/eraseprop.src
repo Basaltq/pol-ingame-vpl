@@ -1,0 +1,18 @@
+/*
+	Dynaamiset esineet - toiminto
+	
+	Northern Winds (c) 2009
+*/
+use os;
+use uo;
+use vitals;
+
+program main( data )
+	
+	var object := data["What"];
+	
+	object.EraseProp(data["Prop"]);
+	
+	return 1;
+	
+endprogram

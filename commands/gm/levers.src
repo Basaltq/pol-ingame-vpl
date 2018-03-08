@@ -1,0 +1,110 @@
+/*
+ * Levers - Ratojen k‰sittelyyn
+ *
+ *	Engine pohjautuu .setsiin
+ *
+ */
+
+use cfgfile;
+use datafile;
+use os;
+use polsys;
+use uo;
+
+include ":gumps:gumps";
+include ":gumps:quick";
+include ":include:datafile";
+include ":include:message";
+include ":include:mobile";
+include ":include:text";
+include ":item:item";
+
+include ":lever:helper";
+include ":lever:build";
+
+// Ladataan
+var cfg := ReadConfigFile(":lever:actions");
+
+
+program command_books( who )
+
+	// Haetaan datafile.
+	var data := DFOpen(DFILE_FUNCTION, DF_KEYTYPE_STRING);
+	
+	if (!data)
+		Message(who, data.errortext);
+		SysLog(data);
+		return 0;
+	endif
+	    
+	var elemname;
+	
+    // Luodaan eteen gumppi jossa on lista seteist‰.
+    // Sek‰ nappi jossa lukee jotakuinkin 'lis‰‰ uusi'.
+    
+	while (1)
+		var elems := array{"[ADD TRACK]"} + data.Keys();
+		var choices := array{ 
+			array{"Select", 1},
+			array{"Delete", 2 }
+		};
+
+		var result := AdvListGump(who, choices, elems, "Lever action tracks");
+
+		if (!result)
+			return 0;
+		elseif (result[2] == 1)
+            
+			case (result[1])
+			    1:
+				  // Tahtoo tehd‰ uuden.
+						
+				  // Infoa t‰st‰.
+				  //Message(who, "Using this option you can create new sets.");
+						elemname := InputGump(who, "Name the new track.");
+						
+						if (!elemname)
+							return;
+						endif
+						
+						EditTrack(who, data.CreateElement(elemname));
+			endcase
+			
+			return 1;
+		endif
+        
+		// Haetaan kohde.
+
+
+		elemname := elems[result[2]];
+		var elem := data.FindElement(elemname);
+
+		if (!elem)
+			// Ei ainakaan olemassa ole --- h‰m‰r‰‰?
+			Message(who, "WTF? "+ elem.errortext);
+			SysLog(elem);
+		endif
+
+		case (result[1])
+            1:
+                // Tahtoo ladata vanhan.
+                EditTrack(who, data.FindElement(elemname));
+				
+            2:
+				// Tuhotaan
+				
+				if (!yesNo(who, "Are you sure you want to destroy element " + elemname + "?"))
+					Message(who, "Cancelled.");
+				else
+					Message(who, "Element " + elemname + " deleted.");
+					data.DeleteElement(elemname);
+				endif
+		endcase
+    
+		sleepms(5);
+        
+	endwhile
+	    
+	return 1;
+endprogram
+

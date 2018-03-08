@@ -1,0 +1,27 @@
+/*
+	Vivin NPC-luonnin vipuihin
+	
+	Northern Winds (c) 2010
+*/
+use os;
+use polsys;
+use uo;
+use vitals;
+
+include ":include:npc";
+include ":lever:helper";
+include ":include:message";
+
+program main( event )
+	
+	print(event);
+	DB("Luodaan otus:"+event["Template"]);
+	var otus := CreateNpc(event["Template"], event["Where"]);
+	
+	if (event["Created"])
+		SaveVariable(event, event["Created"], otus.serial);
+	endif
+	
+	return 1;
+	
+endprogram
